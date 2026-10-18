@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saturn AI - Web Agent</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-ring-wrapper">
+          <div class="saturn-body"></div>
+          <div class="saturn-ring"></div>
+        </div>
+        <div class="brand-text">
+          <div class="title-row">
+            <h1>Saturn AI</h1>
+            <span class="badge-version">v1.0</span>
+          </div>
+          <span class="subtitle">Autonomous Web Agent</span>
+        </div>
+      </div>
+      <div id="statusPill" class="status-pill status-idle">
+        <span class="status-dot"></span>
+        <span id="statusLabel" class="status-text">Ready</span>
+      </div>
+    </header>
+
+    <!-- Active Tab Target Indicator -->
+    <div class="target-bar" id="targetBar">
+      <span class="target-icon">🎯</span>
+      <span class="target-label">Target:</span>
+      <span id="activeTabTitle" class="target-value">Detecting active tab...</span>
+    </div>
+
+    <!-- Main Controls Area -->
+    <main class="main-content">
+      <!-- API Key & Settings Panel (Collapsible) -->
+      <section class="card settings-card">
+        <div class="card-header" id="settingsToggle">
+          <div class="header-left">
+            <span class="icon">🔑</span>
+            <span class="card-title">Gemini API Key</span>
+          </div>
+          <span id="settingsArrow" class="arrow-icon">▼</span>
+        </div>
+        <div id="settingsContent" class="card-body">
+          <div class="input-with-action">
+            <input 
+              type="password" 
+              id="apiKeyInput" 
+              placeholder="Paste Google AI Studio API key..." 
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="toggleKeyVisibility" class="btn-icon" title="Show / Hide Key" type="button">👁️</button>
+            <button id="saveKeyBtn" class="btn-secondary" type="button">Save</button>
+          </div>
+          <div class="settings-meta">
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="link-hint">
+              Get free Gemini API key ↗
+            </a>
+            <div class="model-select-wrapper">
+              <label for="modelSelect">Model:</label>
+              <select id="modelSelect">
+                <option value="gemini-3.8-flash" selected>gemini-3.8-flash</option>
+                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task Prompt Input Card -->
+      <section class="card prompt-card">
+        <label for="promptInput" class="field-label">
+          <span>Task Objective</span>
+          <span class="label-desc">Natural language command</span>
+        </label>
+        <textarea 
+          id="promptInput" 
+          rows="3" 
+          placeholder="E.g., Search Wikipedia for Saturn's rings, click the first link, and summarize the discovery date."
+          spellcheck="false"
+        ></textarea>
+
+        <!-- Quick Presets -->
+        <div class="preset-chips">
+          <span class="presets-label">Suggestions:</span>
+          <button class="chip" data-prompt="Search Google for latest tech breakthroughs and click the top result.">🔍 Tech News</button>
+          <button class="chip" data-prompt="Go to github.com/trending and report the top trending JavaScript repository.">🐙 Trending Repos</button>
+          <button class="chip" data-prompt="Go to news.ycombinator.com and summarize the #1 frontpage story.">📰 Hacker News</button>
+        </div>
+
+        <!-- Run & Stop Buttons -->
+        <div class="action-buttons">
+          <button id="runBtn" class="btn-primary" type="button">
+            <span class="btn-icon">⚡</span>
+            <span id="runBtnText">Run Agent</span>
+          </button>
+          <button id="stopBtn" class="btn-danger" type="button" disabled>
+            <span class="btn-icon">⏹</span>
+            <span>Stop</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Activity & Log Console -->
+      <section class="console-card">
+        <div class="console-header">
+          <div class="console-title">
+            <span class="terminal-icon">❯_</span>
+            <span>Activity Stream</span>
+            <span id="stepCounterBadge" class="step-badge">Step 0/25</span>
+          </div>
+          <button id="clearLogsBtn" class="btn-ghost" type="button">Clear</button>
+        </div>
+        <div id="logStream" class="log-stream">
+          <div class="log-empty-state">
+            <div class="empty-icon">🪐</div>
+            <p>Ready to explore. Enter your task and click <strong>Run Agent</strong>.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
